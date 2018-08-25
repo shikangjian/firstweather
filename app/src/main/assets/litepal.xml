@@ -1,7 +1,10 @@
-<LitePal>
+<litePal>
     <dbname value="first_weather"/>
-    <dbname version="1"/>
-    <mapping class="com.example.firstweather.db.Province"></mapping>
-    <mapping class="com.example.firstweather.db.City"></mapping>
-    <mapping class="com.example.firstweather.db.County"></mapping>
-</LitePal>
+    <version value="1"/>
+    <list>
+        <mapping class="com.example.firstweather.db.Province"></mapping>
+        <mapping class="com.example.firstweather.db.City"></mapping>
+        <mapping class="com.example.firstweather.db.County"></mapping>
+    </list>
+
+</litePal>
