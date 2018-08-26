@@ -1,10 +1,10 @@
 package com.example.firstweather;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +37,7 @@ import okhttp3.Response;
 * */
 public class ChooseAreaFragment extends Fragment {
 
-    public final static int LEVEL_PROVENCE = 0;
+    public final static int LEVEL_PROVINCE = 0;
     public final static int LEVEL_CITY = 1;
     public final static int LEVEL_COUNTY = 2;
 
@@ -75,12 +75,18 @@ public class ChooseAreaFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (currentLevel == LEVEL_PROVENCE) {
+                if (currentLevel == LEVEL_PROVINCE) {
                     selectedProvince = provinceList.get(position);
                     queryCitys();
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     queryCountys();
+                }else if(currentLevel==LEVEL_COUNTY){
+                    String weatherId=countyList.get(position).getWeatherId();
+                    Intent intent=new Intent(getActivity(),WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -110,7 +116,7 @@ public class ChooseAreaFragment extends Fragment {
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
-            currentLevel = LEVEL_PROVENCE;
+            currentLevel = LEVEL_PROVINCE;
         } else {
             String adress = "http://guolin.tech/api/china";
             queryFromServer(adress, "Province");
@@ -123,7 +129,6 @@ public class ChooseAreaFragment extends Fragment {
     private void queryCitys() {
         titleText.setText(selectedProvince.getProvinceName());
         backButton.setVisibility(View.VISIBLE);
-
         cityList = LitePal.where("provinceid = ?",
                 String.valueOf(selectedProvince.getId())).find(City.class);
 
@@ -170,9 +175,9 @@ public class ChooseAreaFragment extends Fragment {
     /*
      * 从服务器上查询省，市，县数据
      * */
-    private void queryFromServer(String adress, final String Type) {
+    private void queryFromServer(String address, final String Type) {
         showProgressDialog();
-        HttpUtil.sendOkHttpRequest(adress, new Callback() {
+        HttpUtil.sendOkHttpRequest(address, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 getActivity().runOnUiThread(new Runnable() {
