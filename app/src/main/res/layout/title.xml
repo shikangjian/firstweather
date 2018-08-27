@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/choose_county"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/choose"/>
 <TextView
     android:id="@+id/title_city"
     android:layout_width="wrap_content"
