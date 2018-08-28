@@ -1,5 +1,6 @@
 package com.example.firstweather;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -241,5 +242,7 @@ public class WeatherActivity extends AppCompatActivity {
         sportText.setText(sport);
 
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent=new Intent(this,AlarmService.class);
+        startService(intent);
     }
 }
